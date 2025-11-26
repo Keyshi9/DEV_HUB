@@ -34,7 +34,7 @@ const StatCard = ({ label, value, icon: Icon, colorClass }) => (
 
 const TransactionHeatmap = () => {
     const heatmapData = useMemo(() => {
-        const weeks = 26; // Increased to 26 weeks (6 months) for a longer view
+        const weeks = 52; // Increased to 52 weeks (1 year) for full width
         const data = [];
         const today = new Date();
 
@@ -122,7 +122,7 @@ const Web3 = () => {
     };
 
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
-    const lastUpdated = new Date().toLocaleString();
+    const lastUpdated = "Nov 26, 2025"; // Static timestamp matching the data snapshot
 
     // Real recent transactions from Base network
     const recentTransactions = [
