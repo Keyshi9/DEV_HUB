@@ -34,7 +34,7 @@ const StatCard = ({ label, value, icon: Icon, colorClass }) => (
 
 const TransactionHeatmap = () => {
     const heatmapData = useMemo(() => {
-        const weeks = 12;
+        const weeks = 26; // Increased to 26 weeks (6 months) for a longer view
         const data = [];
         const today = new Date();
 
@@ -68,7 +68,7 @@ const TransactionHeatmap = () => {
     return (
         <div className="space-y-3 w-full">
             <div className="flex items-center justify-between flex-wrap gap-2">
-                <h4 className="text-sm font-mono text-gray-400">Last 12 Weeks Activity</h4>
+                <h4 className="text-sm font-mono text-gray-400">Last 6 Months Activity</h4>
                 <div className="flex items-center gap-2 text-xs text-gray-500">
                     <span>Less</span>
                     <div className="flex gap-1">
@@ -80,8 +80,8 @@ const TransactionHeatmap = () => {
                 </div>
             </div>
 
-            <div className="overflow-x-auto pb-2">
-                <div className="flex gap-1 w-full justify-center">
+            <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-neon-cyan/20 scrollbar-track-transparent">
+                <div className="flex gap-1 min-w-max">
                     <div className="flex flex-col gap-1 pr-2 justify-around">
                         {days.map((day, i) => (
                             <div key={i} className="h-3 w-3 flex items-center justify-center text-[10px] text-gray-500 font-mono">
@@ -95,7 +95,7 @@ const TransactionHeatmap = () => {
                             {week.map((day, dayIndex) => (
                                 <div
                                     key={dayIndex}
-                                    className={`w-3 h-3 ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative`}
+                                    className={`w-3 h-3 ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative rounded-[1px]`}
                                     title={`${day.date}: ${day.count} tx`}
                                 />
                             ))}
@@ -122,6 +122,7 @@ const Web3 = () => {
     };
 
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
+    const lastUpdated = new Date().toLocaleString();
 
     // Real recent transactions from Base network
     const recentTransactions = [
@@ -186,6 +187,9 @@ const Web3 = () => {
                             <p className="text-sm text-gray-400 font-mono break-all">
                                 {walletAddress}
                             </p>
+                            <p className="text-xs text-gray-500 font-mono mt-1">
+                                Last updated: {lastUpdated}
+                            </p>
                         </div>
                         <a
                             href={`https://basescan.org/address/${walletAddress}#analytics`}
@@ -198,11 +202,10 @@ const Web3 = () => {
                     </div>
 
                     {/* Stats Grid - Real data from BaseScan */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                         <StatCard label="Network" value="Base L2" icon={Layers} colorClass="text-neon-cyan" />
                         <StatCard label="Total Transactions" value="1,357" icon={Activity} colorClass="text-neon-violet" />
                         <StatCard label="Contracts Deployed" value={deployedContracts.length.toString()} icon={FileCode} colorClass="text-neon-green" />
-                        <StatCard label="Balance" value="$419.79" icon={Coins} colorClass="text-yellow-400" />
                     </div>
 
                     {/* Transaction Heatmap */}
