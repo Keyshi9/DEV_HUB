@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap } from 'lucide-react';
+import { Globe, Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap, Calendar } from 'lucide-react';
 import Card from '../components/UI/Card';
 
 const CategoryCard = ({ icon: Icon, title, items, color }) => (
@@ -31,6 +31,94 @@ const StatCard = ({ label, value, icon: Icon, color }) => (
         </div>
     </div>
 );
+
+const TransactionHeatmap = () => {
+    // Generate heatmap data for the last 12 weeks
+    const heatmapData = useMemo(() => {
+        const weeks = 12;
+        const data = [];
+        const today = new Date();
+
+        for (let week = weeks - 1; week >= 0; week--) {
+            const weekData = [];
+            for (let day = 0; day < 7; day++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - (week * 7 + (6 - day)));
+
+                // Simulate transaction activity (0-10 transactions per day)
+                const txCount = Math.floor(Math.random() * 11);
+                weekData.push({
+                    date: date.toISOString().split('T')[0],
+                    count: txCount,
+                    day: date.getDay()
+                });
+            }
+            data.push(weekData);
+        }
+        return data;
+    }, []);
+
+    const getColor = (count) => {
+        if (count === 0) return 'bg-white/5';
+        if (count <= 2) return 'bg-neon-cyan/20';
+        if (count <= 5) return 'bg-neon-cyan/40';
+        if (count <= 8) return 'bg-neon-cyan/60';
+        return 'bg-neon-cyan/80';
+    };
+
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    return (
+        <div className="space-y-4">
+            <div className="flex items-center justify-between">
+                <h4 className="text-sm font-mono text-gray-400">Transaction Activity (Last 12 Weeks)</h4>
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <span>Less</span>
+                    <div className="flex gap-1">
+                        <div className="w-3 h-3 rounded-sm bg-white/5" />
+                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/20" />
+                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/40" />
+                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/60" />
+                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/80" />
+                    </div>
+                    <span>More</span>
+                </div>
+            </div>
+
+            <div className="overflow-x-auto pb-2">
+                <div className="flex gap-1 min-w-max">
+                    {/* Day labels */}
+                    <div className="flex flex-col gap-1 pr-2">
+                        {days.map((day, i) => (
+                            <div key={day} className="h-3 flex items-center">
+                                {i % 2 === 1 && (
+                                    <span className="text-[10px] text-gray-500 font-mono">{day}</span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Heatmap grid */}
+                    {heatmapData.map((week, weekIndex) => (
+                        <div key={weekIndex} className="flex flex-col gap-1">
+                            {week.map((day, dayIndex) => (
+                                <div
+                                    key={dayIndex}
+                                    className={`w-3 h-3 rounded-sm ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative`}
+                                    title={`${day.date}: ${day.count} transactions`}
+                                >
+                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-dark-card border border-neon-cyan/20 rounded text-xs text-white font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                                        {day.date}: {day.count} tx
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Web3 = () => {
     const container = {
@@ -93,14 +181,23 @@ const Web3 = () => {
                         </a>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                         <StatCard label="Network" value="Base L2" icon={Layers} color="neon-cyan" />
                         <StatCard label="Active Since" value="2024" icon={Zap} color="neon-violet" />
                         <StatCard label="Transactions" value="Active" icon={Activity} color="neon-green" />
                         <StatCard label="DeFi Protocols" value="Multiple" icon={Coins} color="yellow-400" />
                     </div>
 
-                    <div className="mt-6 p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10">
+                    {/* Transaction Heatmap */}
+                    <div className="p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10 mb-4">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Calendar className="w-5 h-5 text-neon-cyan" />
+                            <h4 className="text-lg font-bold text-white">Transaction Heatmap</h4>
+                        </div>
+                        <TransactionHeatmap />
+                    </div>
+
+                    <div className="p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10">
                         <p className="text-sm text-gray-300 mb-2">
                             <span className="text-neon-cyan font-bold">Live Analytics:</span> Track real-time on-chain activity, transaction history, and DeFi interactions on Base network.
                         </p>
