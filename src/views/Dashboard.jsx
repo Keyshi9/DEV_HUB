@@ -4,13 +4,13 @@ import { Activity, Code, GitBranch, Terminal, Clock, Zap } from 'lucide-react';
 import Card from '../components/UI/Card';
 
 const StatCard = ({ icon: Icon, label, value, color }) => (
-    <Card className="flex items-center gap-4">
-        <div className={`p-3 rounded-lg bg-${color}/10 text-${color}`}>
-            <Icon className="w-6 h-6" />
+    <Card className="flex items-center gap-3 md:gap-4">
+        <div className={`p-2 md:p-3 rounded-lg bg-${color}/10 text-${color}`}>
+            <Icon className="w-5 h-5 md:w-6 md:h-6" />
         </div>
         <div>
-            <p className="text-gray-400 text-sm font-mono">{label}</p>
-            <h3 className="text-2xl font-bold text-white">{value}</h3>
+            <p className="text-gray-400 text-xs md:text-sm font-mono">{label}</p>
+            <h3 className="text-xl md:text-2xl font-bold text-white">{value}</h3>
         </div>
     </Card>
 );
@@ -50,12 +50,12 @@ const Dashboard = () => {
             animate="show"
             className="space-y-6"
         >
-            <div className="flex justify-between items-end mb-8">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
                 <div>
-                    <h2 className="text-3xl font-bold text-white mb-2">System Overview</h2>
-                    <p className="text-gray-400 font-mono text-sm">Welcome back, User. System operating at 100% efficiency.</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">System Overview</h2>
+                    <p className="text-gray-400 font-mono text-xs md:text-sm">Welcome back, User. System operating at 100% efficiency.</p>
                 </div>
-                <div className="flex items-center gap-2 text-neon-green font-mono text-sm bg-neon-green/10 px-3 py-1 rounded-full border border-neon-green/20">
+                <div className="flex items-center gap-2 text-neon-green font-mono text-xs md:text-sm bg-neon-green/10 px-3 py-1 rounded-full border border-neon-green/20 w-fit">
                     <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
                     ONLINE
                 </div>
