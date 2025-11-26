@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap, FileCode } from 'lucide-react';
 import Card from '../components/UI/Card';
+import useBaseScanStats from '../hooks/useBaseScanStats';
 
 const CategoryCard = ({ icon: Icon, title, items, color }) => (
     <Card className="h-full hover:border-opacity-50 transition-all duration-300">
@@ -20,41 +21,19 @@ const CategoryCard = ({ icon: Icon, title, items, color }) => (
     </Card>
 );
 
-const StatCard = ({ label, value, icon: Icon, colorClass }) => (
+const StatCard = ({ label, value, icon: Icon, colorClass, loading }) => (
     <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-neon-cyan/30 transition-colors">
         <div className={`p-2 rounded-lg ${colorClass}/10`}>
             <Icon className={`w-5 h-5 ${colorClass}`} />
         </div>
         <div>
             <p className="text-xs text-gray-500 font-mono">{label}</p>
-            <p className={`text-lg font-bold ${colorClass}`}>{value}</p>
+            <p className={`text-lg font-bold ${colorClass}`}>{loading ? '...' : value}</p>
         </div>
     </div>
 );
 
-const TransactionHeatmap = () => {
-    const heatmapData = useMemo(() => {
-        const weeks = 52; // Increased to 52 weeks (1 year) for full width
-        const data = [];
-        const today = new Date();
-
-        for (let week = weeks - 1; week >= 0; week--) {
-            const weekData = [];
-            for (let day = 0; day < 7; day++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - (week * 7 + (6 - day)));
-                const txCount = Math.floor(Math.random() * 11);
-                weekData.push({
-                    date: date.toISOString().split('T')[0],
-                    count: txCount,
-                    day: date.getDay()
-                });
-            }
-            data.push(weekData);
-        }
-        return data;
-    }, []);
-
+const TransactionHeatmap = ({ data, loading }) => {
     const getColor = (count) => {
         if (count === 0) return 'bg-white/5';
         if (count <= 2) return 'bg-neon-cyan/20';
@@ -122,16 +101,18 @@ const Web3 = () => {
     };
 
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
-    const lastUpdated = "Nov 26, 2025"; // Static timestamp matching the data snapshot
 
-    // Real recent transactions from Base network (derived from holdings)
-    const recentTransactions = [
-        { hash: '0x4a2b...9c1d', type: 'Claim Airdrop', value: '89,365 HMSTR', time: '1 day ago', status: 'Success' },
-        { hash: '0x8e1f...2g3h', type: 'Mint NFT', value: 'Base Logos #4021', time: '3 days ago', status: 'Success' },
-        { hash: '0x3i4j...5k6l', type: 'Swap', value: '0.05 ETH -> Jesse', time: '5 days ago', status: 'Success' },
-        { hash: '0x7m8n...9o0p', type: 'Mint NFT', value: 'Bera Capsule', time: '1 week ago', status: 'Success' },
-        { hash: '0x1q2r...3s4t', type: 'Approve', value: 'USDC Spend', time: '1 week ago', status: 'Success' },
-    ];
+    // Fetch real-time blockchain data
+    const { totalTransactions, recentTransactions, heatmapData, loading } = useBaseScanStats(walletAddress);
+
+    // Get current timestamp
+    const lastUpdated = new Date().toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 
     const deployedContracts = [
         { name: "VooiChecker", address: "0x1234...5678", network: "Base", txCount: 145 },
@@ -201,16 +182,16 @@ const Web3 = () => {
                         </a>
                     </div>
 
-                    {/* Stats Grid - Real data from BaseScan */}
+                    {/* Stats Grid - Real-time BaseScan Data */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                        <StatCard label="Network" value="Base L2" icon={Layers} colorClass="text-neon-cyan" />
-                        <StatCard label="Total Transactions" value="1,357" icon={Activity} colorClass="text-neon-violet" />
-                        <StatCard label="Contracts Deployed" value={deployedContracts.length.toString()} icon={FileCode} colorClass="text-neon-green" />
+                        <StatCard label="Network" value="Base L2" icon={Layers} colorClass="text-neon-cyan" loading={false} />
+                        <StatCard label="Total Transactions" value={totalTransactions || '...'} icon={Activity} colorClass="text-neon-violet" loading={loading} />
+                        <StatCard label="Contracts Deployed" value={deployedContracts.length.toString()} icon={FileCode} colorClass="text-neon-green" loading={false} />
                     </div>
 
-                    {/* Transaction Heatmap */}
+                    {/* Transaction Heatmap - Real Data */}
                     <div className="mb-6">
-                        <TransactionHeatmap />
+                        <TransactionHeatmap data={heatmapData} loading={loading} />
                     </div>
 
                     {/* Recent Base Transactions */}
