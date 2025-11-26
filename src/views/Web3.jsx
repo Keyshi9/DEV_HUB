@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap, Calendar } from 'lucide-react';
+import { Globe, Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap, Calendar, FileCode } from 'lucide-react';
 import Card from '../components/UI/Card';
 
 const CategoryCard = ({ icon: Icon, title, items, color }) => (
@@ -33,7 +33,6 @@ const StatCard = ({ label, value, icon: Icon, color }) => (
 );
 
 const TransactionHeatmap = () => {
-    // Generate heatmap data for the last 12 weeks
     const heatmapData = useMemo(() => {
         const weeks = 12;
         const data = [];
@@ -44,8 +43,6 @@ const TransactionHeatmap = () => {
             for (let day = 0; day < 7; day++) {
                 const date = new Date(today);
                 date.setDate(date.getDate() - (week * 7 + (6 - day)));
-
-                // Simulate transaction activity (0-10 transactions per day)
                 const txCount = Math.floor(Math.random() * 11);
                 weekData.push({
                     date: date.toISOString().split('T')[0],
@@ -66,20 +63,18 @@ const TransactionHeatmap = () => {
         return 'bg-neon-cyan/80';
     };
 
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     return (
-        <div className="space-y-4">
-            <div className="flex items-center justify-between">
-                <h4 className="text-sm font-mono text-gray-400">Transaction Activity (Last 12 Weeks)</h4>
+        <div className="space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+                <h4 className="text-sm font-mono text-gray-400">Last 12 Weeks Activity</h4>
                 <div className="flex items-center gap-2 text-xs text-gray-500">
                     <span>Less</span>
                     <div className="flex gap-1">
-                        <div className="w-3 h-3 rounded-sm bg-white/5" />
-                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/20" />
-                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/40" />
-                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/60" />
-                        <div className="w-3 h-3 rounded-sm bg-neon-cyan/80" />
+                        {[0, 2, 5, 8, 10].map(val => (
+                            <div key={val} className={`w-3 h-3 rounded-sm ${getColor(val)}`} />
+                        ))}
                     </div>
                     <span>More</span>
                 </div>
@@ -87,30 +82,22 @@ const TransactionHeatmap = () => {
 
             <div className="overflow-x-auto pb-2">
                 <div className="flex gap-1 min-w-max">
-                    {/* Day labels */}
-                    <div className="flex flex-col gap-1 pr-2">
+                    <div className="flex flex-col gap-1 pr-2 justify-around">
                         {days.map((day, i) => (
-                            <div key={day} className="h-3 flex items-center">
-                                {i % 2 === 1 && (
-                                    <span className="text-[10px] text-gray-500 font-mono">{day}</span>
-                                )}
+                            <div key={i} className="h-3 flex items-center text-[10px] text-gray-500 font-mono w-3">
+                                {day}
                             </div>
                         ))}
                     </div>
 
-                    {/* Heatmap grid */}
                     {heatmapData.map((week, weekIndex) => (
                         <div key={weekIndex} className="flex flex-col gap-1">
                             {week.map((day, dayIndex) => (
                                 <div
                                     key={dayIndex}
                                     className={`w-3 h-3 rounded-sm ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative`}
-                                    title={`${day.date}: ${day.count} transactions`}
-                                >
-                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-dark-card border border-neon-cyan/20 rounded text-xs text-white font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                                        {day.date}: {day.count} tx
-                                    </div>
-                                </div>
+                                    title={`${day.date}: ${day.count} tx`}
+                                />
                             ))}
                         </div>
                     ))}
@@ -136,6 +123,12 @@ const Web3 = () => {
 
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
 
+    // Simulated contract deployments
+    const deployedContracts = [
+        { name: "VooiChecker", address: "0x1234...5678", network: "Base", txCount: 145 },
+        { name: "BaseFootprint", address: "0xabcd...ef01", network: "Base", txCount: 89 },
+    ];
+
     return (
         <motion.div
             variants={container}
@@ -143,10 +136,10 @@ const Web3 = () => {
             animate="show"
             className="space-y-8"
         >
-            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Web3 & Crypto Expertise</h2>
-                    <p className="text-gray-400 font-mono text-xs md:text-sm">DeFi strategies, blockchain infrastructure, and on-chain analytics knowledge.</p>
+                    <p className="text-gray-400 font-mono text-xs md:text-sm">DeFi strategies, blockchain infrastructure, and on-chain analytics.</p>
                 </div>
                 <div className="flex gap-2 flex-wrap">
                     <span className="px-3 py-1 rounded bg-neon-cyan/10 text-neon-cyan text-xs font-mono border border-neon-cyan/20">
@@ -159,7 +152,7 @@ const Web3 = () => {
             </div>
 
             {/* Blockchain Analytics Section */}
-            <motion.div variants={item}>
+            <motion.div variants={item} className="space-y-6">
                 <Card className="bg-gradient-to-br from-neon-cyan/5 to-transparent border-neon-cyan/20">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                         <div>
@@ -168,7 +161,7 @@ const Web3 = () => {
                                 On-Chain Analytics
                             </h3>
                             <p className="text-sm text-gray-400 font-mono break-all">
-                                Base Network: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                                {walletAddress}
                             </p>
                         </div>
                         <a
@@ -181,33 +174,49 @@ const Web3 = () => {
                         </a>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                         <StatCard label="Network" value="Base L2" icon={Layers} color="neon-cyan" />
-                        <StatCard label="Active Since" value="2024" icon={Zap} color="neon-violet" />
-                        <StatCard label="Transactions" value="Active" icon={Activity} color="neon-green" />
-                        <StatCard label="DeFi Protocols" value="Multiple" icon={Coins} color="yellow-400" />
+                        <StatCard label="Total Transactions" value="234+" icon={Activity} color="neon-violet" />
+                        <StatCard label="Contracts Deployed" value={deployedContracts.length.toString()} icon={FileCode} color="neon-green" />
+                        <StatCard label="Active Protocols" value="8+" icon={Coins} color="yellow-400" />
                     </div>
 
                     {/* Transaction Heatmap */}
-                    <div className="p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10 mb-4">
-                        <div className="flex items-center gap-2 mb-4">
-                            <Calendar className="w-5 h-5 text-neon-cyan" />
-                            <h4 className="text-lg font-bold text-white">Transaction Heatmap</h4>
-                        </div>
+                    <div className="mb-6">
                         <TransactionHeatmap />
                     </div>
 
-                    <div className="p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10">
-                        <p className="text-sm text-gray-300 mb-2">
-                            <span className="text-neon-cyan font-bold">Live Analytics:</span> Track real-time on-chain activity, transaction history, and DeFi interactions on Base network.
-                        </p>
-                        <p className="text-xs text-gray-500 font-mono">
-                            Analytics include: Transaction volume, Gas usage, Token transfers, Smart contract interactions, NFT activity
-                        </p>
+                    {/* Deployed Contracts */}
+                    <div className="space-y-3">
+                        <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                            <FileCode className="w-5 h-5 text-neon-green" />
+                            Deployed Smart Contracts
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {deployedContracts.map((contract, index) => (
+                                <div key={index} className="p-4 rounded-lg bg-dark-bg/50 border border-neon-green/20 hover:border-neon-green/40 transition-colors">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <div>
+                                            <h5 className="font-bold text-white">{contract.name}</h5>
+                                            <p className="text-xs text-gray-500 font-mono">{contract.address}</p>
+                                        </div>
+                                        <span className="px-2 py-1 rounded bg-neon-green/10 text-neon-green text-xs font-mono border border-neon-green/20">
+                                            {contract.network}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                                        <Activity className="w-4 h-4 text-neon-green" />
+                                        <span>{contract.txCount} transactions</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </Card>
             </motion.div>
 
+            {/* Knowledge Categories */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <motion.div variants={item}>
                     <CategoryCard
@@ -246,7 +255,7 @@ const Web3 = () => {
                 </motion.div>
             </div>
 
-            {/* Featured Protocols / Tools */}
+            {/* Featured Protocols */}
             <motion.div variants={item}>
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-neon-cyan" />
