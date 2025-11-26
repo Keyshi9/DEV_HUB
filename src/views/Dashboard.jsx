@@ -2,32 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Code, GitBranch, Terminal, ArrowRight, Mail } from 'lucide-react';
 import Card from '../components/UI/Card';
+import useGitHubStats from '../hooks/useGitHubStats';
 
-const StatCard = ({ icon: Icon, label, value, color }) => (
-    <Card className="flex items-center gap-3 md:gap-4">
-        <div className={`p-2 md:p-3 rounded-lg bg-${color}/10 text-${color}`}>
-            <Icon className="w-5 h-5 md:w-6 md:h-6" />
+const StatCard = ({ icon: Icon, label, value, color, loading }) => (
+    <Card className="text-center hover:border-opacity-50 transition-all">
+        <div className={`w-12 h-12 rounded-full bg-${color}/10 flex items-center justify-center mx-auto mb-4`}>
+            <Icon className={`w-6 h-6 text-${color}`} />
         </div>
-        <div>
-            <p className="text-gray-400 text-xs md:text-sm font-mono">{label}</p>
-            <h3 className="text-xl md:text-2xl font-bold text-white">{value}</h3>
-        </div>
+        <p className="text-gray-400 text-sm font-mono mb-2">{label}</p>
+        <p className={`text-3xl font-bold text-${color}`}>
+            {loading ? '...' : value}
+        </p>
     </Card>
 );
 
 const ActivityItem = ({ action, target, time }) => (
-    <div className="flex items-start gap-3 py-3 border-b border-dark-border last:border-0">
-        <div className="mt-1 w-2 h-2 rounded-full bg-neon-cyan" />
-        <div>
+    <div className="flex items-center gap-4 py-3 border-b border-dark-border last:border-0 hover:bg-white/5 transition-colors px-4 -mx-4 rounded">
+        <div className="w-2 h-2 rounded-full bg-neon-cyan" />
+        <div className="flex-1">
             <p className="text-sm text-gray-300">
                 <span className="text-neon-cyan font-mono">{action}</span> {target}
             </p>
-            <p className="text-xs text-gray-500 font-mono mt-1">{time}</p>
         </div>
+        <span className="text-xs text-gray-500 font-mono">{time}</span>
     </div>
 );
 
 const Dashboard = ({ setActiveTab }) => {
+    const { repos, totalCommits, loading } = useGitHubStats('Keyshi9');
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -78,11 +80,11 @@ const Dashboard = ({ setActiveTab }) => {
                 </div>
             </motion.div>
 
-            {/* Stats Grid - Real Data */}
+            {/* Stats Grid - Real-time GitHub Data */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <motion.div variants={item}><StatCard icon={Code} label="Featured Projects" value="2" color="neon-cyan" /></motion.div>
-                <motion.div variants={item}><StatCard icon={GitBranch} label="GitHub Repos" value="5" color="neon-violet" /></motion.div>
-                <motion.div variants={item}><StatCard icon={Terminal} label="Hours of Code" value="200+" color="neon-green" /></motion.div>
+                <motion.div variants={item}><StatCard icon={Code} label="Featured Projects" value="2" color="neon-cyan" loading={false} /></motion.div>
+                <motion.div variants={item}><StatCard icon={GitBranch} label="GitHub Repos" value={repos} color="neon-violet" loading={loading} /></motion.div>
+                <motion.div variants={item}><StatCard icon={Terminal} label="Total Commits" value={totalCommits > 0 ? totalCommits : '150+'} color="neon-green" loading={loading} /></motion.div>
             </div>
 
             {/* Recent Work */}
