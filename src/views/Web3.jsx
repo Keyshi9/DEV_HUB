@@ -73,7 +73,7 @@ const TransactionHeatmap = () => {
                     <span>Less</span>
                     <div className="flex gap-1">
                         {[0, 2, 5, 8, 10].map(val => (
-                            <div key={val} className={`w-3 h-3 ${getColor(val)}`} />
+                            <div key={val} className={`w-4 h-4 ${getColor(val)}`} />
                         ))}
                     </div>
                     <span>More</span>
@@ -84,7 +84,7 @@ const TransactionHeatmap = () => {
                 <div className="flex gap-1 min-w-max">
                     <div className="flex flex-col gap-1 pr-2 justify-around">
                         {days.map((day, i) => (
-                            <div key={i} className="h-3 w-3 flex items-center justify-center text-[10px] text-gray-500 font-mono">
+                            <div key={i} className="h-4 w-4 flex items-center justify-center text-[10px] text-gray-500 font-mono">
                                 {day}
                             </div>
                         ))}
@@ -95,7 +95,7 @@ const TransactionHeatmap = () => {
                             {week.map((day, dayIndex) => (
                                 <div
                                     key={dayIndex}
-                                    className={`w-3 h-3 ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative rounded-[1px]`}
+                                    className={`w-4 h-4 ${getColor(day.count)} hover:ring-1 hover:ring-neon-cyan transition-all cursor-pointer group relative rounded-[1px]`}
                                     title={`${day.date}: ${day.count} tx`}
                                 />
                             ))}

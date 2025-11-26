@@ -9,7 +9,7 @@ const SkillBar = ({ skill, level, colorClass }) => (
             <span className="text-sm font-mono text-gray-300">{skill}</span>
             <span className="text-xs text-gray-500">{level}%</span>
         </div>
-        <div className="w-full bg-dark-bg rounded-full h-2">
+        <div className="w-full bg-white/10 rounded-full h-2">
             <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${level}%` }}
