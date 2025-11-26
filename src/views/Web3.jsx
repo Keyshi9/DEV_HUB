@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Coins, Layers, ArrowRightLeft, Lock, TrendingUp, Wallet, Shield } from 'lucide-react';
+import { Globe, Coins, Layers, ArrowRightLeft, TrendingUp, Shield, Activity, ExternalLink, Zap } from 'lucide-react';
 import Card from '../components/UI/Card';
 
 const CategoryCard = ({ icon: Icon, title, items, color }) => (
@@ -20,6 +20,18 @@ const CategoryCard = ({ icon: Icon, title, items, color }) => (
     </Card>
 );
 
+const StatCard = ({ label, value, icon: Icon, color }) => (
+    <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-neon-cyan/30 transition-colors">
+        <div className={`p-2 rounded-lg bg-${color}/10`}>
+            <Icon className={`w-5 h-5 text-${color}`} />
+        </div>
+        <div>
+            <p className="text-xs text-gray-500 font-mono">{label}</p>
+            <p className={`text-lg font-bold text-${color}`}>{value}</p>
+        </div>
+    </div>
+);
+
 const Web3 = () => {
     const container = {
         hidden: { opacity: 0 },
@@ -33,6 +45,8 @@ const Web3 = () => {
         hidden: { y: 20, opacity: 0 },
         show: { y: 0, opacity: 1 }
     };
+
+    const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
 
     return (
         <motion.div
@@ -55,6 +69,47 @@ const Web3 = () => {
                     </span>
                 </div>
             </div>
+
+            {/* Blockchain Analytics Section */}
+            <motion.div variants={item}>
+                <Card className="bg-gradient-to-br from-neon-cyan/5 to-transparent border-neon-cyan/20">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                        <div>
+                            <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                                <Activity className="w-6 h-6 text-neon-cyan" />
+                                On-Chain Analytics
+                            </h3>
+                            <p className="text-sm text-gray-400 font-mono break-all">
+                                Base Network: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                            </p>
+                        </div>
+                        <a
+                            href={`https://basescan.org/address/${walletAddress}#analytics`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neon-cyan/10 text-neon-cyan hover:bg-neon-cyan/20 transition-all border border-neon-cyan/20 font-mono text-sm w-fit"
+                        >
+                            View on BaseScan <ExternalLink className="w-4 h-4" />
+                        </a>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <StatCard label="Network" value="Base L2" icon={Layers} color="neon-cyan" />
+                        <StatCard label="Active Since" value="2024" icon={Zap} color="neon-violet" />
+                        <StatCard label="Transactions" value="Active" icon={Activity} color="neon-green" />
+                        <StatCard label="DeFi Protocols" value="Multiple" icon={Coins} color="yellow-400" />
+                    </div>
+
+                    <div className="mt-6 p-4 rounded-lg bg-dark-bg/50 border border-neon-cyan/10">
+                        <p className="text-sm text-gray-300 mb-2">
+                            <span className="text-neon-cyan font-bold">Live Analytics:</span> Track real-time on-chain activity, transaction history, and DeFi interactions on Base network.
+                        </p>
+                        <p className="text-xs text-gray-500 font-mono">
+                            Analytics include: Transaction volume, Gas usage, Token transfers, Smart contract interactions, NFT activity
+                        </p>
+                    </div>
+                </Card>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <motion.div variants={item}>
