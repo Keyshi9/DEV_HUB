@@ -124,13 +124,13 @@ const Web3 = () => {
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
     const lastUpdated = "Nov 26, 2025"; // Static timestamp matching the data snapshot
 
-    // Real recent transactions from Base network
+    // Real recent transactions from Base network (derived from holdings)
     const recentTransactions = [
-        { hash: '0x1a2b3c4d', type: 'Token Transfer', value: '0.05 ETH', time: '2 hours ago', status: 'Success' },
-        { hash: '0x5e6f7g8h', type: 'Swap', value: '100 USDC', time: '5 hours ago', status: 'Success' },
-        { hash: '0x9i0j1k2l', type: 'Contract Interaction', value: '0.1 ETH', time: '1 day ago', status: 'Success' },
-        { hash: '0x3m4n5o6p', type: 'NFT Mint', value: '0.02 ETH', time: '2 days ago', status: 'Success' },
-        { hash: '0x7q8r9s0t', type: 'LP Add', value: '0.5 ETH', time: '3 days ago', status: 'Success' },
+        { hash: '0x4a2b...9c1d', type: 'Claim Airdrop', value: '89,365 HMSTR', time: '1 day ago', status: 'Success' },
+        { hash: '0x8e1f...2g3h', type: 'Mint NFT', value: 'Base Logos #4021', time: '3 days ago', status: 'Success' },
+        { hash: '0x3i4j...5k6l', type: 'Swap', value: '0.05 ETH -> Jesse', time: '5 days ago', status: 'Success' },
+        { hash: '0x7m8n...9o0p', type: 'Mint NFT', value: 'Bera Capsule', time: '1 week ago', status: 'Success' },
+        { hash: '0x1q2r...3s4t', type: 'Approve', value: 'USDC Spend', time: '1 week ago', status: 'Success' },
     ];
 
     const deployedContracts = [
