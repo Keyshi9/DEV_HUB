@@ -13,14 +13,14 @@ function App() {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'home': return <Dashboard />;
+      case 'home': return <Dashboard setActiveTab={setActiveTab} />;
       case 'projects': return <Projects />;
       case 'skills': return <Skills />;
       case 'web3': return <Web3 />;
       case 'about': return <About />;
       case 'contact': return <Contact />;
       case 'terminal': return <Terminal />;
-      default: return <Dashboard />;
+      default: return <Dashboard setActiveTab={setActiveTab} />;
     }
   };
 

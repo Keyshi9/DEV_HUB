@@ -62,7 +62,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                         <Layers className="text-white w-5 h-5" />
                     </div>
                     <h1 className="text-xl font-bold font-mono tracking-tighter text-white">
-                        Keyshi <span className="text-neon-cyan text-xs">Portfolio</span>
+                        Sow <span className="text-neon-cyan text-xs">Portfolio</span>
                     </h1>
                 </div>
 
@@ -74,6 +74,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                         return (
                             <button
                                 key={item.id}
+                                data-nav={item.id}
                                 onClick={() => handleNavClick(item.id)}
                                 className={clsx(
                                     "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group relative overflow-hidden",

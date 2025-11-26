@@ -27,7 +27,7 @@ const ActivityItem = ({ action, target, time }) => (
     </div>
 );
 
-const Dashboard = () => {
+const Dashboard = ({ setActiveTab }) => {
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -51,7 +51,7 @@ const Dashboard = () => {
             {/* Hero Section */}
             <motion.div variants={item} className="text-center md:text-left max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-green bg-clip-text text-transparent">
-                    Keyshi
+                    Sow
                 </h1>
                 <h2 className="text-xl md:text-2xl text-neon-cyan font-mono mb-6">
                     Web & Software Developer — Web3 & Crypto Enthusiast
@@ -63,26 +63,18 @@ const Dashboard = () => {
                     web frameworks.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a
-                        href="#projects"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            document.querySelector('[data-nav="projects"]')?.click();
-                        }}
+                    <button
+                        onClick={() => setActiveTab('projects')}
                         className="px-8 py-3 rounded-lg bg-neon-cyan text-dark-bg font-bold hover:bg-neon-cyan/90 transition-all shadow-[0_0_20px_rgba(0,243,255,0.3)] hover:shadow-[0_0_30px_rgba(0,243,255,0.5)] flex items-center justify-center gap-2"
                     >
                         View Projects <ArrowRight className="w-5 h-5" />
-                    </a>
-                    <a
-                        href="#contact"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            document.querySelector('[data-nav="contact"]')?.click();
-                        }}
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('contact')}
                         className="px-8 py-3 rounded-lg border-2 border-neon-violet text-neon-violet font-bold hover:bg-neon-violet/10 transition-all flex items-center justify-center gap-2"
                     >
                         Contact Me <Mail className="w-5 h-5" />
-                    </a>
+                    </button>
                 </div>
             </motion.div>
 

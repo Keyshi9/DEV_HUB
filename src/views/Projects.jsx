@@ -74,7 +74,7 @@ const Projects = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="fixed inset-0 z-[100] bg-dark-bg flex flex-col"
+                        className="fixed inset-0 lg:left-64 z-[100] bg-dark-bg flex flex-col"
                     >
                         {/* Focus Mode Header */}
                         <div className="h-14 border-b border-dark-border flex items-center justify-between px-6 bg-dark-card">

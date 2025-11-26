@@ -66,7 +66,7 @@ const TransactionHeatmap = () => {
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 w-full">
             <div className="flex items-center justify-between flex-wrap gap-2">
                 <h4 className="text-sm font-mono text-gray-400">Last 12 Weeks Activity</h4>
                 <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -81,7 +81,7 @@ const TransactionHeatmap = () => {
             </div>
 
             <div className="overflow-x-auto pb-2">
-                <div className="flex gap-1 min-w-max">
+                <div className="flex gap-1 w-full justify-center">
                     <div className="flex flex-col gap-1 pr-2 justify-around">
                         {days.map((day, i) => (
                             <div key={i} className="h-3 flex items-center text-[10px] text-gray-500 font-mono w-3">
@@ -123,10 +123,24 @@ const Web3 = () => {
 
     const walletAddress = "0x78db3729E58EcB6BDFd32e13801e197399b55d45";
 
-    // Simulated contract deployments
     const deployedContracts = [
         { name: "VooiChecker", address: "0x1234...5678", network: "Base", txCount: 145 },
         { name: "BaseFootprint", address: "0xabcd...ef01", network: "Base", txCount: 89 },
+    ];
+
+    const protocols = [
+        { name: 'Uniswap', url: 'https://uniswap.org' },
+        { name: 'Aave', url: 'https://aave.com' },
+        { name: 'Curve', url: 'https://curve.fi' },
+        { name: 'GMX', url: 'https://gmx.io' },
+        { name: 'EigenLayer', url: 'https://eigenlayer.xyz' },
+        { name: 'Lido', url: 'https://lido.fi' },
+        { name: 'Base', url: 'https://base.org' },
+        { name: 'Arbitrum', url: 'https://arbitrum.io' },
+        { name: 'Optimism', url: 'https://optimism.io' },
+        { name: 'Zora', url: 'https://zora.co' },
+        { name: 'Farcaster', url: 'https://farcaster.xyz' },
+        { name: 'Lens', url: 'https://lens.xyz' },
     ];
 
     return (
@@ -174,7 +188,6 @@ const Web3 = () => {
                         </a>
                     </div>
 
-                    {/* Stats Grid */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                         <StatCard label="Network" value="Base L2" icon={Layers} color="neon-cyan" />
                         <StatCard label="Total Transactions" value="234+" icon={Activity} color="neon-violet" />
@@ -182,12 +195,10 @@ const Web3 = () => {
                         <StatCard label="Active Protocols" value="8+" icon={Coins} color="yellow-400" />
                     </div>
 
-                    {/* Transaction Heatmap */}
                     <div className="mb-6">
                         <TransactionHeatmap />
                     </div>
 
-                    {/* Deployed Contracts */}
                     <div className="space-y-3">
                         <h4 className="text-lg font-bold text-white flex items-center gap-2">
                             <FileCode className="w-5 h-5 text-neon-green" />
@@ -216,7 +227,6 @@ const Web3 = () => {
                 </Card>
             </motion.div>
 
-            {/* Knowledge Categories */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <motion.div variants={item}>
                     <CategoryCard
@@ -255,17 +265,22 @@ const Web3 = () => {
                 </motion.div>
             </div>
 
-            {/* Featured Protocols */}
             <motion.div variants={item}>
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-neon-cyan" />
                     Active Protocols & Tools
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {['Uniswap', 'Aave', 'Curve', 'GMX', 'EigenLayer', 'Lido', 'Base', 'Arbitrum', 'Optimism', 'Zora', 'Farcaster', 'Lens'].map((protocol) => (
-                        <div key={protocol} className="p-3 rounded-lg bg-white/5 border border-white/5 text-center hover:bg-white/10 transition-colors cursor-pointer">
-                            <span className="text-sm font-mono text-gray-300">{protocol}</span>
-                        </div>
+                    {protocols.map((protocol) => (
+                        <a
+                            key={protocol.name}
+                            href={protocol.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 rounded-lg bg-white/5 border border-white/5 text-center hover:bg-white/10 hover:border-neon-cyan/30 transition-colors cursor-pointer group"
+                        >
+                            <span className="text-sm font-mono text-gray-300 group-hover:text-neon-cyan transition-colors">{protocol.name}</span>
+                        </a>
                     ))}
                 </div>
             </motion.div>

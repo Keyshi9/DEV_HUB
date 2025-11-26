@@ -1,29 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Database, Layout, Server, Cpu } from 'lucide-react';
+import { Code, Layers, Database, Globe, TrendingUp, ExternalLink } from 'lucide-react';
 import Card from '../components/UI/Card';
 
-const SkillBar = ({ name, level, color }) => (
-    <div className="mb-4">
-        <div className="flex justify-between mb-1">
-            <span className="text-sm font-mono text-gray-300">{name}</span>
-            <span className="text-xs font-mono text-gray-500">{level}%</span>
+const SkillBar = ({ skill, level, color }) => (
+    <div className="space-y-2">
+        <div className="flex justify-between items-center">
+            <span className="text-sm font-mono text-gray-300">{skill}</span>
+            <span className="text-xs text-gray-500">{level}%</span>
         </div>
-        <div className="w-full bg-dark-bg rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-dark-bg rounded-full h-2">
             <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${level}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className={`h-full bg-${color}`}
+                transition={{ duration: 1, delay: 0.2 }}
+                className={`h-2 rounded-full bg-${color}`}
             />
         </div>
     </div>
 );
 
-const SkillBadge = ({ name, color }) => (
-    <span className={`px-3 py-1 rounded-full text-xs font-mono border border-${color}/30 bg-${color}/10 text-${color} hover:bg-${color}/20 transition-colors cursor-default`}>
-        {name}
-    </span>
+const TechBadge = ({ name, icon: Icon }) => (
+    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-neon-cyan/30 transition-colors">
+        {Icon && <Icon className="w-4 h-4 text-neon-cyan" />}
+        <span className="text-sm font-mono text-gray-300">{name}</span>
+    </div>
 );
 
 const Skills = () => {
@@ -40,6 +41,15 @@ const Skills = () => {
         show: { y: 0, opacity: 1 }
     };
 
+    // Recent Base transactions (simulated data)
+    const recentTransactions = [
+        { hash: '0x1a2b...3c4d', type: 'Contract Deploy', value: '0.05 ETH', time: '2 hours ago', status: 'Success' },
+        { hash: '0x5e6f...7g8h', type: 'Token Transfer', value: '100 USDC', time: '5 hours ago', status: 'Success' },
+        { hash: '0x9i0j...1k2l', type: 'Swap', value: '0.1 ETH', time: '1 day ago', status: 'Success' },
+        { hash: '0x3m4n...5o6p', type: 'NFT Mint', value: '0.02 ETH', time: '2 days ago', status: 'Success' },
+        { hash: '0x7q8r...9s0t', type: 'LP Add', value: '0.5 ETH', time: '3 days ago', status: 'Success' },
+    ];
+
     return (
         <motion.div
             variants={container}
@@ -48,104 +58,133 @@ const Skills = () => {
             className="space-y-8"
         >
             <div>
-                <h2 className="text-3xl font-bold text-white mb-2">Technical Arsenal</h2>
-                <p className="text-gray-400 font-mono text-sm">Proficiency levels and technology stack.</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Technical Skills</h2>
+                <p className="text-gray-400 font-mono text-xs md:text-sm">Full-stack development expertise across web, software, and blockchain technologies.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Core Languages */}
-                <motion.div variants={item}>
-                    <Card className="h-full">
-                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                            <Code className="w-5 h-5 text-neon-cyan" />
-                            Core Languages
-                        </h3>
-                        <SkillBar name="JavaScript / TypeScript" level={95} color="neon-cyan" />
-                        <SkillBar name="Python" level={90} color="neon-violet" />
-                        <SkillBar name="Solidity" level={85} color="neon-green" />
-                        <SkillBar name="C++" level={70} color="blue-500" />
-                        <SkillBar name="Java" level={65} color="red-500" />
-                    </Card>
-                </motion.div>
-
-                {/* Frontend & Backend */}
-                <motion.div variants={item} className="space-y-6">
-                    <Card>
-                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            <Layout className="w-5 h-5 text-neon-violet" />
-                            Frontend Stack
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                            <SkillBadge name="React" color="neon-cyan" />
-                            <SkillBadge name="Next.js" color="white" />
-                            <SkillBadge name="Tailwind CSS" color="neon-cyan" />
-                            <SkillBadge name="Framer Motion" color="neon-violet" />
-                            <SkillBadge name="Three.js" color="white" />
-                            <SkillBadge name="Vite" color="neon-green" />
-                        </div>
-                    </Card>
-
-                    <Card>
-                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            <Server className="w-5 h-5 text-neon-green" />
-                            Backend & Data
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                            <SkillBadge name="Node.js" color="neon-green" />
-                            <SkillBadge name="Express" color="white" />
-                            <SkillBadge name="SQL / PostgreSQL" color="blue-400" />
-                            <SkillBadge name="MongoDB" color="green-500" />
-                            <SkillBadge name="GraphQL" color="neon-violet" />
-                            <SkillBadge name="Firebase" color="yellow-500" />
-                        </div>
-                    </Card>
-                </motion.div>
-            </div>
-
-            {/* Web3 Specialization */}
+            {/* Core Programming Languages */}
             <motion.div variants={item}>
-                <Card className="border-neon-cyan/30 bg-neon-cyan/5">
-                    <div className="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 className="text-xl font-bold flex items-center gap-2 text-white">
-                                <Cpu className="w-5 h-5 text-neon-cyan" />
-                                Web3 Engineering
-                            </h3>
-                            <p className="text-sm text-gray-400 mt-1">Specialized blockchain development skills.</p>
-                        </div>
-                        <div className="px-3 py-1 rounded bg-neon-cyan/20 text-neon-cyan text-xs font-mono border border-neon-cyan/30">
-                            FOCUS AREA
-                        </div>
+                <Card>
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Code className="w-6 h-6 text-neon-cyan" />
+                        Core Programming Languages
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <SkillBar skill="JavaScript / TypeScript" level={90} color="neon-cyan" />
+                        <SkillBar skill="Python" level={85} color="neon-violet" />
+                        <SkillBar skill="Solidity" level={80} color="neon-green" />
+                        <SkillBar skill="C++" level={75} color="yellow-400" />
+                        <SkillBar skill="Java" level={70} color="neon-cyan" />
+                        <SkillBar skill="SQL" level={85} color="neon-violet" />
+                    </div>
+                </Card>
+            </motion.div>
+
+            {/* Web Development */}
+            <motion.div variants={item}>
+                <Card>
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Globe className="w-6 h-6 text-neon-violet" />
+                        Web Development
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <TechBadge name="React" />
+                        <TechBadge name="Next.js" />
+                        <TechBadge name="Tailwind CSS" />
+                        <TechBadge name="Framer Motion" />
+                        <TechBadge name="Three.js" />
+                        <TechBadge name="Vite" />
+                        <TechBadge name="HTML/CSS" />
+                        <TechBadge name="XML/JSON" />
+                    </div>
+                </Card>
+            </motion.div>
+
+            {/* Backend & Database */}
+            <motion.div variants={item}>
+                <Card>
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Database className="w-6 h-6 text-neon-green" />
+                        Backend & Database
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <TechBadge name="Node.js" />
+                        <TechBadge name="Express" />
+                        <TechBadge name="PostgreSQL" />
+                        <TechBadge name="MongoDB" />
+                        <TechBadge name="GraphQL" />
+                        <TechBadge name="Firebase" />
+                        <TechBadge name="PHP" />
+                        <TechBadge name="REST APIs" />
+                    </div>
+                </Card>
+            </motion.div>
+
+            {/* Web3 & Blockchain */}
+            <motion.div variants={item}>
+                <Card>
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Layers className="w-6 h-6 text-yellow-400" />
+                        Web3 & Blockchain
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <TechBadge name="Solidity" />
+                        <TechBadge name="Hardhat" />
+                        <TechBadge name="Foundry" />
+                        <TechBadge name="Ethers.js" />
+                        <TechBadge name="Wagmi" />
+                        <TechBadge name="Viem" />
+                        <TechBadge name="Smart Contracts" />
+                        <TechBadge name="DeFi Protocols" />
+                    </div>
+                </Card>
+            </motion.div>
+
+            {/* Recent Base Transactions */}
+            <motion.div variants={item}>
+                <Card className="bg-gradient-to-br from-neon-cyan/5 to-transparent border-neon-cyan/20">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                            <TrendingUp className="w-6 h-6 text-neon-cyan" />
+                            Recent Base Network Transactions
+                        </h3>
+                        <a
+                            href="https://basescan.org/address/0x78db3729E58EcB6BDFd32e13801e197399b55d45"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-mono text-neon-cyan hover:text-white flex items-center gap-1"
+                        >
+                            View All <ExternalLink className="w-3 h-3" />
+                        </a>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="p-4 rounded-lg bg-dark-bg/50 border border-dark-border">
-                            <h4 className="font-bold text-white mb-2">Smart Contracts</h4>
-                            <p className="text-xs text-gray-400 mb-3">Development, testing, and deployment of secure contracts.</p>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="text-xs text-neon-cyan">#Solidity</span>
-                                <span className="text-xs text-neon-cyan">#Hardhat</span>
-                                <span className="text-xs text-neon-cyan">#Foundry</span>
-                            </div>
-                        </div>
-                        <div className="p-4 rounded-lg bg-dark-bg/50 border border-dark-border">
-                            <h4 className="font-bold text-white mb-2">DeFi Protocols</h4>
-                            <p className="text-xs text-gray-400 mb-3">Understanding of AMMs, Lending, and Yield strategies.</p>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="text-xs text-neon-violet">#Uniswap</span>
-                                <span className="text-xs text-neon-violet">#Aave</span>
-                                <span className="text-xs text-neon-violet">#Curve</span>
-                            </div>
-                        </div>
-                        <div className="p-4 rounded-lg bg-dark-bg/50 border border-dark-border">
-                            <h4 className="font-bold text-white mb-2">Integration</h4>
-                            <p className="text-xs text-gray-400 mb-3">Connecting frontends to blockchain networks.</p>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="text-xs text-neon-green">#Ethers.js</span>
-                                <span className="text-xs text-neon-green">#Wagmi</span>
-                                <span className="text-xs text-neon-green">#Viem</span>
-                            </div>
-                        </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                            <thead>
+                                <tr className="border-b border-dark-border">
+                                    <th className="text-left py-3 px-4 font-mono text-gray-400 text-xs">TX Hash</th>
+                                    <th className="text-left py-3 px-4 font-mono text-gray-400 text-xs">Type</th>
+                                    <th className="text-left py-3 px-4 font-mono text-gray-400 text-xs">Value</th>
+                                    <th className="text-left py-3 px-4 font-mono text-gray-400 text-xs">Time</th>
+                                    <th className="text-left py-3 px-4 font-mono text-gray-400 text-xs">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {recentTransactions.map((tx, index) => (
+                                    <tr key={index} className="border-b border-dark-border/50 hover:bg-white/5 transition-colors">
+                                        <td className="py-3 px-4 font-mono text-neon-cyan text-xs">{tx.hash}</td>
+                                        <td className="py-3 px-4 text-gray-300">{tx.type}</td>
+                                        <td className="py-3 px-4 font-mono text-gray-300">{tx.value}</td>
+                                        <td className="py-3 px-4 text-gray-500 text-xs">{tx.time}</td>
+                                        <td className="py-3 px-4">
+                                            <span className="px-2 py-1 rounded bg-neon-green/10 text-neon-green text-xs font-mono border border-neon-green/20">
+                                                {tx.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </Card>
             </motion.div>
