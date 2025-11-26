@@ -78,11 +78,11 @@ const Dashboard = ({ setActiveTab }) => {
                 </div>
             </motion.div>
 
-            {/* Stats Grid - Simplified */}
+            {/* Stats Grid - Real Data */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <motion.div variants={item}><StatCard icon={Code} label="Projects Completed" value="12" color="neon-cyan" /></motion.div>
-                <motion.div variants={item}><StatCard icon={GitBranch} label="GitHub Commits" value="1,234" color="neon-violet" /></motion.div>
-                <motion.div variants={item}><StatCard icon={Terminal} label="Hours of Code" value="843" color="neon-green" /></motion.div>
+                <motion.div variants={item}><StatCard icon={Code} label="Featured Projects" value="2" color="neon-cyan" /></motion.div>
+                <motion.div variants={item}><StatCard icon={GitBranch} label="GitHub Repos" value="5" color="neon-violet" /></motion.div>
+                <motion.div variants={item}><StatCard icon={Terminal} label="Hours of Code" value="200+" color="neon-green" /></motion.div>
             </div>
 
             {/* Recent Work */}
