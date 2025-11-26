@@ -68,7 +68,7 @@ const TransactionHeatmap = () => {
     return (
         <div className="space-y-3 w-full">
             <div className="flex items-center justify-between flex-wrap gap-2">
-                <h4 className="text-sm font-mono text-gray-400">Last 6 Months Activity</h4>
+                <h4 className="text-sm font-mono text-gray-400">Last 1 Year Activity</h4>
                 <div className="flex items-center gap-2 text-xs text-gray-500">
                     <span>Less</span>
                     <div className="flex gap-1">
