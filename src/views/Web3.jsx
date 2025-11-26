@@ -44,6 +44,22 @@ const TransactionHeatmap = ({ data, loading }) => {
 
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-32">
+                <p className="text-gray-500 font-mono text-sm">Loading activity data...</p>
+            </div>
+        );
+    }
+
+    if (!data || data.length === 0) {
+        return (
+            <div className="flex items-center justify-center h-32">
+                <p className="text-gray-500 font-mono text-sm">No activity data available</p>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-3 w-full">
             <div className="flex items-center justify-between flex-wrap gap-2">
@@ -69,7 +85,7 @@ const TransactionHeatmap = ({ data, loading }) => {
                         ))}
                     </div>
 
-                    {heatmapData.map((week, weekIndex) => (
+                    {data.map((week, weekIndex) => (
                         <div key={weekIndex} className="flex flex-col gap-1">
                             {week.map((day, dayIndex) => (
                                 <div
