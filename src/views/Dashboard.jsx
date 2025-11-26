@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Code, GitBranch, Terminal, Clock, Zap } from 'lucide-react';
+import { Activity, Code, GitBranch, Terminal, ArrowRight, Mail } from 'lucide-react';
 import Card from '../components/UI/Card';
 
 const StatCard = ({ icon: Icon, label, value, color }) => (
@@ -32,9 +32,7 @@ const Dashboard = () => {
         hidden: { opacity: 0 },
         show: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
+            transition: { staggerChildren: 0.1 }
         }
     };
 
@@ -48,83 +46,70 @@ const Dashboard = () => {
             variants={container}
             initial="hidden"
             animate="show"
-            className="space-y-6"
+            className="space-y-12"
         >
-            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">System Overview</h2>
-                    <p className="text-gray-400 font-mono text-xs md:text-sm">Welcome back, User. System operating at 100% efficiency.</p>
+            {/* Hero Section */}
+            <motion.div variants={item} className="text-center md:text-left max-w-4xl mx-auto">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-green bg-clip-text text-transparent">
+                    Keyshi
+                </h1>
+                <h2 className="text-xl md:text-2xl text-neon-cyan font-mono mb-6">
+                    Web & Software Developer — Web3 & Crypto Enthusiast
+                </h2>
+                <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-8 max-w-2xl">
+                    Passionate developer specializing in full-stack web development and blockchain technologies.
+                    Building decentralized applications and exploring the intersection of traditional software
+                    engineering and Web3 innovation. Experienced in DeFi protocols, smart contracts, and modern
+                    web frameworks.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a
+                        href="#projects"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.querySelector('[data-nav="projects"]')?.click();
+                        }}
+                        className="px-8 py-3 rounded-lg bg-neon-cyan text-dark-bg font-bold hover:bg-neon-cyan/90 transition-all shadow-[0_0_20px_rgba(0,243,255,0.3)] hover:shadow-[0_0_30px_rgba(0,243,255,0.5)] flex items-center justify-center gap-2"
+                    >
+                        View Projects <ArrowRight className="w-5 h-5" />
+                    </a>
+                    <a
+                        href="#contact"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.querySelector('[data-nav="contact"]')?.click();
+                        }}
+                        className="px-8 py-3 rounded-lg border-2 border-neon-violet text-neon-violet font-bold hover:bg-neon-violet/10 transition-all flex items-center justify-center gap-2"
+                    >
+                        Contact Me <Mail className="w-5 h-5" />
+                    </a>
                 </div>
-                <div className="flex items-center gap-2 text-neon-green font-mono text-xs md:text-sm bg-neon-green/10 px-3 py-1 rounded-full border border-neon-green/20 w-fit">
-                    <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
-                    ONLINE
-                </div>
+            </motion.div>
+
+            {/* Stats Grid - Simplified */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div variants={item}><StatCard icon={Code} label="Projects Completed" value="12" color="neon-cyan" /></motion.div>
+                <motion.div variants={item}><StatCard icon={GitBranch} label="GitHub Commits" value="1,234" color="neon-violet" /></motion.div>
+                <motion.div variants={item}><StatCard icon={Terminal} label="Hours of Code" value="843" color="neon-green" /></motion.div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <motion.div variants={item}><StatCard icon={Code} label="Projects" value="12" color="neon-cyan" /></motion.div>
-                <motion.div variants={item}><StatCard icon={GitBranch} label="Commits" value="1,234" color="neon-violet" /></motion.div>
-                <motion.div variants={item}><StatCard icon={Terminal} label="Hours Coded" value="843" color="neon-green" /></motion.div>
-                <motion.div variants={item}><StatCard icon={Zap} label="Current Streak" value="14 Days" color="yellow-400" /></motion.div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                {/* Recent Activity */}
-                <motion.div variants={item} className="lg:col-span-2">
-                    <Card className="h-full">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-bold flex items-center gap-2">
-                                <Activity className="w-5 h-5 text-neon-cyan" />
-                                Recent Activity
-                            </h3>
-                            <button className="text-xs font-mono text-neon-cyan hover:text-white transition-colors">VIEW ALL</button>
-                        </div>
-                        <div className="space-y-1">
-                            <ActivityItem action="Deployed" target="Vooi Checker to Mainnet" time="2 hours ago" />
-                            <ActivityItem action="Updated" target="Base Footprint Smart Contracts" time="5 hours ago" />
-                            <ActivityItem action="Created" target="New Repository: DEV_HUB" time="Today, 10:00 AM" />
-                            <ActivityItem action="Minted" target="NFT #4021 on Base" time="Yesterday" />
-                        </div>
-                    </Card>
-                </motion.div>
-
-                {/* System Status / Quick Actions */}
-                <motion.div variants={item} className="space-y-6">
-                    <Card>
-                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-neon-violet" />
-                            Quick Actions
+            {/* Recent Work */}
+            <motion.div variants={item}>
+                <Card className="max-w-4xl mx-auto">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-2xl font-bold flex items-center gap-2">
+                            <Activity className="w-6 h-6 text-neon-cyan" />
+                            Recent Work
                         </h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            <button className="p-3 rounded-lg bg-white/5 hover:bg-neon-cyan/20 hover:text-neon-cyan transition-all text-sm font-mono border border-white/5 hover:border-neon-cyan/50">
-                                New Project
-                            </button>
-                            <button className="p-3 rounded-lg bg-white/5 hover:bg-neon-violet/20 hover:text-neon-violet transition-all text-sm font-mono border border-white/5 hover:border-neon-violet/50">
-                                Deploy
-                            </button>
-                            <button className="p-3 rounded-lg bg-white/5 hover:bg-neon-green/20 hover:text-neon-green transition-all text-sm font-mono border border-white/5 hover:border-neon-green/50">
-                                Run Tests
-                            </button>
-                            <button className="p-3 rounded-lg bg-white/5 hover:bg-yellow-400/20 hover:text-yellow-400 transition-all text-sm font-mono border border-white/5 hover:border-yellow-400/50">
-                                Docs
-                            </button>
-                        </div>
-                    </Card>
-
-                    <Card className="bg-gradient-to-br from-neon-violet/20 to-transparent border-neon-violet/30">
-                        <h3 className="text-lg font-bold mb-2">Next Goal</h3>
-                        <p className="text-sm text-gray-300 mb-3">Complete the Developer OS dashboard implementation.</p>
-                        <div className="w-full bg-dark-bg rounded-full h-2">
-                            <div className="bg-neon-violet h-2 rounded-full" style={{ width: '45%' }} />
-                        </div>
-                        <div className="flex justify-between text-xs font-mono mt-2 text-gray-400">
-                            <span>Progress</span>
-                            <span>45%</span>
-                        </div>
-                    </Card>
-                </motion.div>
-            </div>
+                    </div>
+                    <div className="space-y-1">
+                        <ActivityItem action="Deployed" target="Vooi Checker to Mainnet" time="2 hours ago" />
+                        <ActivityItem action="Updated" target="Base Footprint Smart Contracts" time="5 hours ago" />
+                        <ActivityItem action="Created" target="New Repository: DEV_HUB" time="Today, 10:00 AM" />
+                        <ActivityItem action="Minted" target="NFT #4021 on Base" time="Yesterday" />
+                    </div>
+                </Card>
+            </motion.div>
         </motion.div>
     );
 };

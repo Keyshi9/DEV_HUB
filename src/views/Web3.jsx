@@ -41,12 +41,12 @@ const Web3 = () => {
             animate="show"
             className="space-y-8"
         >
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
                 <div>
-                    <h2 className="text-3xl font-bold text-white mb-2">Web3 Ecosystem</h2>
-                    <p className="text-gray-400 font-mono text-sm">DeFi strategies, blockchain infrastructure, and on-chain analytics.</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Web3 & Crypto Expertise</h2>
+                    <p className="text-gray-400 font-mono text-xs md:text-sm">DeFi strategies, blockchain infrastructure, and on-chain analytics knowledge.</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                     <span className="px-3 py-1 rounded bg-neon-cyan/10 text-neon-cyan text-xs font-mono border border-neon-cyan/20">
                         EVM Compatible
                     </span>
@@ -107,26 +107,6 @@ const Web3 = () => {
                         </div>
                     ))}
                 </div>
-            </motion.div>
-
-            {/* Wallet / Status Section */}
-            <motion.div variants={item}>
-                <Card className="bg-gradient-to-r from-dark-card to-dark-bg border-neon-violet/20">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 rounded-full bg-neon-violet/10 text-neon-violet">
-                                <Wallet className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold text-white">Wallet Integration</h3>
-                                <p className="text-sm text-gray-400">Connect your wallet to view personalized on-chain data.</p>
-                            </div>
-                        </div>
-                        <button className="px-6 py-2 rounded-lg bg-neon-violet text-white font-bold hover:bg-neon-violet/80 transition-colors shadow-[0_0_15px_rgba(157,0,255,0.3)]">
-                            Connect Wallet
-                        </button>
-                    </div>
-                </Card>
             </motion.div>
         </motion.div>
     );

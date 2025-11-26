@@ -120,22 +120,14 @@ const Projects = () => {
                         className="space-y-8"
                     >
                         <div>
-                            <h2 className="text-3xl font-bold text-white mb-2">Projects Hub</h2>
-                            <p className="text-gray-400 font-mono text-sm">Deployments, experiments, and production applications.</p>
+                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Featured Projects</h2>
+                            <p className="text-gray-400 font-mono text-xs md:text-sm">Explore my recent work in Web3, DeFi, and blockchain development.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {projects.map(project => (
                                 <ProjectCard key={project.id} project={project} onOpen={setActiveProject} />
                             ))}
-
-                            {/* Placeholder for "Add New" */}
-                            <button className="border-2 border-dashed border-dark-border rounded-xl p-6 flex flex-col items-center justify-center gap-4 text-gray-500 hover:text-neon-cyan hover:border-neon-cyan/50 transition-all group h-full min-h-[300px]">
-                                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-neon-cyan/10 transition-colors">
-                                    <ExternalLink className="w-6 h-6" />
-                                </div>
-                                <span className="font-mono text-sm">Connect New Repository</span>
-                            </button>
                         </div>
                     </motion.div>
                 )}
